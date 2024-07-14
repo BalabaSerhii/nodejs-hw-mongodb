@@ -9,13 +9,13 @@
 // bootstrap();
 
 import dotenv from 'dotenv';
-import initMongoDB from './db/initMongoCollection.js';
-import setupServer from './server.js';
+import {initMongoConnection} from './db/initMongoCollection.js';
+import {setupServer} from './server.js';
 
 dotenv.config();
 
 const bootstrap = async () => {
-  await initMongoDB();
+  await initMongoConnection();
   setupServer();
 };
 
