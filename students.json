@@ -7,7 +7,8 @@
   "gender": "male",
   "avgMark": 10.6,
   "onDuty": false,
-  "createdAt": {
+  "createdAt": { 
+    
     "$date": "2023-04-19T19:00:57.262Z"
   },
   "updatedAt": {
