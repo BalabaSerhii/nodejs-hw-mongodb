@@ -8,15 +8,18 @@
 
 // bootstrap();
 
-import dotenv from 'dotenv';
-import {initMongoConnection} from './db/initMongoCollection.js';
-import {setupServer} from './server.js';
-
-dotenv.config();
+// src/index.js
+import { setupServer } from './server.js';
+import { initMongoConnection } from './db/initMongoConnection.js';
 
 const bootstrap = async () => {
-  await initMongoConnection();
-  setupServer();
+  try {
+    await initMongoConnection();
+    setupServer();
+  } catch (error) {
+    console.error('Ошибка запуска приложения:', error);
+    process.exit(1);
+  }
 };
 
 bootstrap();
