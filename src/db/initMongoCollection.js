@@ -28,20 +28,16 @@ export const initMongoConnection = async () => {
     const url = env('MONGODB_URL');
     const db = env('MONGODB_DB');
 
-    console.log('MONGODB_USER:', user);
-    console.log('MONGODB_PASSWORD:', pwd);
-    console.log('MONGODB_URL:', url);
-    console.log('MONGODB_DB:', db);
-
     if (!user || !pwd || !url || !db) {
-      throw new Error('Отсутствуют переменные окружения для подключения к MongoDB');
+      throw new Error(
+        'Отсутствуют переменные окружения для подключения к MongoDB',
+      );
     }
 
     const connectionString = `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`;
-    console.log('Connection String:', connectionString);
 
     await mongoose.connect(connectionString, {
-      useNewUrlParser: true,
+      useNewUrlParser: true, // Хотя эти параметры устарели, их всё равно можно оставить для обратной совместимости
       useUnifiedTopology: true,
     });
 

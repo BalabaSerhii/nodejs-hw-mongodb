@@ -9,10 +9,12 @@ import { env } from './utils/env.js';
 export const setupServer = () => {
   const app = express();
 
-  app.use(express.json({
-    type: ['application/json', 'application/vnd.api+json'],
-    limit: '100kb',
-  }));
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+      limit: '100kb',
+    }),
+  );
 
   app.use(cors());
 
@@ -42,8 +44,6 @@ export const setupServer = () => {
     console.log(`Server is running on port ${PORT}`);
   });
 };
-
-export default setupServer;
 
 ///////////////////////////////////////////////////////
 // import express from 'express';
@@ -93,7 +93,6 @@ export default setupServer;
 //   });
 // };
 //////////////////////////////////////////////////////////////
-
 
 // import express from 'express';
 // import pino from 'pino-http';
