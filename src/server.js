@@ -6,7 +6,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { env } from './utils/env.js';
 
-const setupServer = () => {
+export const setupServer = () => {
   const app = express();
 
   app.use(express.json({
