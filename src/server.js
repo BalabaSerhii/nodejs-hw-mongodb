@@ -28,7 +28,7 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello world!',
+      message: 'No contacts found!',
     });
   });
 

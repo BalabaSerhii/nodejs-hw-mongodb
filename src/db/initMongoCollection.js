@@ -3,10 +3,15 @@ import { env } from '../utils/env.js';
 
 export const initMongoConnection = async () => {
   try {
-    const user = env('MONGODB_USER');
-    const pwd = env('MONGODB_PASSWORD');
-    const url = env('MONGODB_URL');
-    const db = env('MONGODB_DB');
+    // const user = env('MONGODB_USER');
+    // const pwd = env('MONGODB_PASSWORD');
+    // const url = env('MONGODB_URL');
+    // const db = env('MONGODB_DB');
+
+    const user = balabaserhii;
+    const pwd = K5lUp5bQlB5wl52O;
+    const url = cluster0.l5s2aj8.mongodb.net;
+    const db = yourDB;
 
     await mongoose.connect(
       `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
@@ -37,7 +42,7 @@ export const initMongoConnection = async () => {
 //     const connectionString = `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`;
 
 //     await mongoose.connect(connectionString, {
-//       useNewUrlParser: true, // Хотя эти параметры устарели, их всё равно можно оставить для обратной совместимости
+//       useNewUrlParser: true, 
 //       useUnifiedTopology: true,
 //     });
 
