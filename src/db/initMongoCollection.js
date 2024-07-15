@@ -7,15 +7,13 @@ export const initMongoConnection = async () => {
     // const pwd = env('MONGODB_PASSWORD');
     // const url = env('MONGODB_URL');
     // const db = env('MONGODB_DB');
+    const DB = env('DB_URI');
 
-    const user = balabaserhii;
-    const pwd = K5lUp5bQlB5wl52O;
-    const url = cluster0.l5s2aj8.mongodb.net;
-    const db = yourDB;
+    await mongoose.connect(DB);
 
-    await mongoose.connect(
-      `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
-    );
+    // await mongoose.connect(
+    //   `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
+    // );
 
     console.log('Mongo connection successfully established!');
   } catch (e) {
@@ -42,7 +40,7 @@ export const initMongoConnection = async () => {
 //     const connectionString = `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`;
 
 //     await mongoose.connect(connectionString, {
-//       useNewUrlParser: true, 
+//       useNewUrlParser: true,
 //       useUnifiedTopology: true,
 //     });
 
