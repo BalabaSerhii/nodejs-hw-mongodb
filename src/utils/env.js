@@ -2,8 +2,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export function getEnvVariable(name, defaultValue = undefined) {
-  const value = process.getEnvVariable[name];
+export function env(name, defaultValue = undefined) {
+  const value = process.env[name];
 
   if (value !== undefined) {
     return value;
@@ -13,5 +13,5 @@ export function getEnvVariable(name, defaultValue = undefined) {
     return defaultValue;
   }
 
-  throw new Error(`Missing: process.getEnvVariable['${name}'].`);
+  throw new Error(`Missing: process.env['${name}'].`);
 }
