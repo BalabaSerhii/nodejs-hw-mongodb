@@ -26,12 +26,11 @@ export const getContactByIdController = async (req, res, next) => {
     const contact = await getContactById(contactId);
 
     if (!contact) {
-      res.status(404).json({
+      return res.status(404).json({
         status: 404,
         message: 'Contact not found',
         data: null,
       });
-      return;
     }
 
     res.status(200).json({
@@ -40,6 +39,13 @@ export const getContactByIdController = async (req, res, next) => {
       data: contact,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+        data: null,
+      });
+    }
     next(createHttpError(500, `Failed to retrieve contact: ${error.message}`));
   }
 };
@@ -63,7 +69,11 @@ export const patchContactController = async (req, res, next) => {
     const result = await patchContact(contactId, req.body);
 
     if (!result) {
-      return next(createHttpError(404, 'Contact not found'));
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+        data: null,
+      });
     }
 
     res.status(200).json({
@@ -72,6 +82,13 @@ export const patchContactController = async (req, res, next) => {
       data: result.contact,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+        data: null,
+      });
+    }
     next(createHttpError(500, `Failed to update contact: ${error.message}`));
   }
 };
@@ -82,11 +99,22 @@ export const deleteContactController = async (req, res, next) => {
     const delContact = await deleteContact(contactId);
 
     if (!delContact) {
-      return next(createHttpError(404, 'Contact not found'));
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+        data: null,
+      });
     }
 
     res.status(204).send();
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(404).json({
+        status: 404,
+        message: 'Contact not found',
+        data: null,
+      });
+    }
     next(createHttpError(500, `Failed to delete contact: ${error.message}`));
   }
 };
