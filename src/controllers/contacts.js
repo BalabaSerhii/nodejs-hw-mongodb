@@ -39,7 +39,7 @@ export const getContactByIdController = async (req, res, next) => {
       data: contact,
     });
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error.name === 'CastError' || error.kind === 'ObjectId') {
       return res.status(404).json({
         status: 404,
         message: 'Contact not found',
@@ -82,7 +82,7 @@ export const patchContactController = async (req, res, next) => {
       data: result.contact,
     });
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error.name === 'CastError' || error.kind === 'ObjectId') {
       return res.status(404).json({
         status: 404,
         message: 'Contact not found',
@@ -108,7 +108,7 @@ export const deleteContactController = async (req, res, next) => {
 
     res.status(204).send();
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error.name === 'CastError' || error.kind === 'ObjectId') {
       return res.status(404).json({
         status: 404,
         message: 'Contact not found',
