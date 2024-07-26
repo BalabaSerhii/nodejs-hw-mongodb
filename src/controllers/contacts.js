@@ -104,6 +104,7 @@ export const patchContactController = async (req, res, next) => {
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
+  // Validate ObjectId before querying the database
   if (!isValidObjectId(contactId)) {
     return res.status(404).json({
       status: 404,

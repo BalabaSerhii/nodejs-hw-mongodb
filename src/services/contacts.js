@@ -10,12 +10,11 @@ export const getAllContacts = async () => {
 
 export const getContactById = async (contactId) => {
     try {
-        const contact = await ContactsCollection.findById(contactId);
-        if (!contact) {
-            throw new Error('Contact not found');
-        }
-        return contact;
+        return await ContactsCollection.findById(contactId);
     } catch (error) {
+        if (error.kind === 'ObjectId') {
+            return null;
+        }
         throw new Error(`Failed to retrieve contact: ${error.message}`);
     }
 };
@@ -47,15 +46,20 @@ export const patchContact = async (contactId, payload, options = {}) => {
             isNew: Boolean(rawResult?.lastErrorObject?.upserted),
         };
     } catch (error) {
+        if (error.kind === 'ObjectId') {
+            return null;
+        }
         throw new Error(`Failed to update contact: ${error.message}`);
     }
 };
 
 export const deleteContact = async (contactId) => {
     try {
-        const contact = await ContactsCollection.findOneAndDelete({ _id: contactId });
-        return contact;
+        return await ContactsCollection.findOneAndDelete({ _id: contactId });
     } catch (error) {
+        if (error.kind === 'ObjectId') {
+            return null;
+        }
         throw new Error(`Failed to delete contact: ${error.message}`);
     }
 };
