@@ -7,6 +7,8 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 
+const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
+
 export const getContactsController = async (req, res, next) => {
   try {
     const contacts = await getAllContacts();
@@ -22,6 +24,15 @@ export const getContactsController = async (req, res, next) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
+  
+  if (!isValidObjectId(contactId)) {
+    return res.status(404).json({
+      status: 404,
+      message: 'Contact not found',
+      data: null,
+    });
+  }
+
   try {
     const contact = await getContactById(contactId);
 
@@ -39,13 +50,6 @@ export const getContactByIdController = async (req, res, next) => {
       data: contact,
     });
   } catch (error) {
-    if (error.name === 'CastError' || error.kind === 'ObjectId') {
-      return res.status(404).json({
-        status: 404,
-        message: 'Contact not found',
-        data: null,
-      });
-    }
     next(createHttpError(500, `Failed to retrieve contact: ${error.message}`));
   }
 };
@@ -65,6 +69,15 @@ export const createContactController = async (req, res, next) => {
 
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
+
+  if (!isValidObjectId(contactId)) {
+    return res.status(404).json({
+      status: 404,
+      message: 'Contact not found',
+      data: null,
+    });
+  }
+
   try {
     const result = await patchContact(contactId, req.body);
 
@@ -82,19 +95,21 @@ export const patchContactController = async (req, res, next) => {
       data: result.contact,
     });
   } catch (error) {
-    if (error.name === 'CastError' || error.kind === 'ObjectId') {
-      return res.status(404).json({
-        status: 404,
-        message: 'Contact not found',
-        data: null,
-      });
-    }
     next(createHttpError(500, `Failed to update contact: ${error.message}`));
   }
 };
 
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
+
+  if (!isValidObjectId(contactId)) {
+    return res.status(404).json({
+      status: 404,
+      message: 'Contact not found',
+      data: null,
+    });
+  }
+
   try {
     const delContact = await deleteContact(contactId);
 
@@ -108,13 +123,6 @@ export const deleteContactController = async (req, res, next) => {
 
     res.status(204).send();
   } catch (error) {
-    if (error.name === 'CastError' || error.kind === 'ObjectId') {
-      return res.status(404).json({
-        status: 404,
-        message: 'Contact not found',
-        data: null,
-      });
-    }
     next(createHttpError(500, `Failed to delete contact: ${error.message}`));
   }
 };
