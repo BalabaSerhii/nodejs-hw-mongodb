@@ -22,21 +22,18 @@ export const getContactsController = async (req, res, next) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  try {
-    const contact = await getContactById(contactId);
 
-    if (!contact) {
-      return next(createHttpError(404, 'Contact not found'));
-    }
+  const contact = await getContactById(contactId);
 
-    res.status(200).json({
-      status: 200,
-      message: `Contact with ID ${contactId} retrieved successfully`,
-      data: contact,
-    });
-  } catch (error) {
-    next(createHttpError(500, `Failed to retrieve contact: ${error.message}`));
+  if (!contact) {
+    return next(createHttpError(404, 'Contact not found'));
   }
+
+  res.status(200).json({
+    status: 200,
+    message: `Contact with ID ${contactId} retrieved successfully`,
+    data: contact,
+  });
 };
 
 export const createContactController = async (req, res, next) => {
