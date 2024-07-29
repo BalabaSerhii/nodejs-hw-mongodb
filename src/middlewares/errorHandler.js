@@ -5,7 +5,9 @@ export const errorHandler = (err, req, res, next) => {
     res.status(err.status).json({
       status: err.status,
       message: err.message || err.name,
-      data: null,
+      data: {
+        message: err.message,
+      },
     });
     return;
   }
@@ -15,4 +17,6 @@ export const errorHandler = (err, req, res, next) => {
     message: 'Internal Server Error',
     data: err.message || 'An unexpected error occurred',
   });
+
+  next();
 };
