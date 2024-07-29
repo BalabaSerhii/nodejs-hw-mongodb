@@ -5,16 +5,29 @@ import {
   patchContact,
   deleteContact,
 } from '../services/contacts.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 import createHttpError from 'http-errors';
 
 const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 export const getContactsController = async (req, res, next) => {
   try {
-    const contacts = await getAllContacts();
+    const { page, perPage } = parsePaginationParams(req.query);
+    const { sortBy, sortOrder } = parseSortParams(req.query);
+    const filter = parseFilterParams(req.query);
+
+    const contacts = await getAllContacts({
+      page,
+      perPage,
+      sortBy,
+      sortOrder,
+      filter,
+    });
     res.status(200).json({
       status: 200,
-      message: 'Contacts retrieved successfully',
+      message: 'Successfully found contacts!',
       data: contacts,
     });
   } catch (error) {
@@ -24,7 +37,7 @@ export const getContactsController = async (req, res, next) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  
+
   if (!isValidObjectId(contactId)) {
     return res.status(404).json({
       status: 404,
@@ -37,17 +50,16 @@ export const getContactByIdController = async (req, res, next) => {
     const contact = await getContactById(contactId);
 
     if (!contact) {
-      res.status(404).json({
+      return res.status(404).json({
         status: 404,
         message: 'Contact not found',
         data: null,
       });
-      return;
     }
 
     res.status(200).json({
       status: 200,
-      message: `Contact with ID ${contactId} retrieved successfully`,
+      message: `Successfully found contact with id ${contactId}!`,
       data: contact,
     });
   } catch (error) {
@@ -83,17 +95,16 @@ export const patchContactController = async (req, res, next) => {
     const result = await patchContact(contactId, req.body);
 
     if (!result) {
-      res.status(404).json({
+      return res.status(404).json({
         status: 404,
         message: 'Contact not found',
         data: null,
       });
-      return;
     }
 
     res.status(200).json({
       status: 200,
-      message: 'Contact updated successfully',
+      message: 'Successfully patched a contact!',
       data: result.contact,
     });
   } catch (error) {
@@ -104,7 +115,6 @@ export const patchContactController = async (req, res, next) => {
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
-  // Validate ObjectId before querying the database
   if (!isValidObjectId(contactId)) {
     return res.status(404).json({
       status: 404,
@@ -117,12 +127,11 @@ export const deleteContactController = async (req, res, next) => {
     const delContact = await deleteContact(contactId);
 
     if (!delContact) {
-      res.status(404).json({
+      return res.status(404).json({
         status: 404,
         message: 'Contact not found',
         data: null,
       });
-      return;
     }
 
     res.status(204).send();
