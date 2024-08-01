@@ -1,17 +1,18 @@
 const parseType = (type) => {
+  const isString = typeof type === 'string';
+  if (!isString) return;
   const validTypes = ['work', 'home', 'personal'];
-  if (typeof type === 'string' && validTypes.includes(type.toLowerCase())) {
-    return type.toLowerCase();
+  if (validTypes.includes(type)) {
+    return type;
   }
-  return null;
 };
 
 const parseFavourite = (isFavourite) => {
-  if (typeof isFavourite === 'string') {
-    if (isFavourite.toLowerCase() === 'true') return true;
-    if (isFavourite.toLowerCase() === 'false') return false;
-  }
-  return null;
+  const isString = typeof isFavourite === 'string';
+  if (!isString) return;
+
+  if (isFavourite === 'true') return true;
+  if (isFavourite === 'false') return false;
 };
 
 export const parseFilterParams = (query) => {
