@@ -1,10 +1,10 @@
-import { isValidObjectId } from 'mongoose';
-import createHttpError from 'http-errors';
+import { HttpError } from 'http-errors';
 
 export const isValidId = (req, res, next) => {
   const { contactId } = req.params;
   if (!isValidObjectId(contactId)) {
-    return next(createHttpError(404, 'Not found'));
+    throw new HttpError(404, 'Not found');
   }
+
   next();
 };
