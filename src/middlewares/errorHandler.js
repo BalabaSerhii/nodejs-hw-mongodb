@@ -4,7 +4,7 @@ export const errorHandler = (err, req, res, next) => {
   if (err instanceof HttpError) {
     res.status(err.status).json({
       status: err.status,
-      message: err.message || err.name,
+      message: err.name,
       data: {
         message: err.message,
       },
@@ -14,9 +14,8 @@ export const errorHandler = (err, req, res, next) => {
 
   res.status(500).json({
     status: 500,
-    message: 'Internal Server Error',
-    data: err.message || 'An unexpected error occurred',
+    message: 'Something went wrong',
+    data: err.message,
   });
-
   next();
 };
