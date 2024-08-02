@@ -34,7 +34,6 @@ import { HttpError } from 'http-errors';
 
 export const errorHandler = (err, req, res, next) => {
   if (err.isJoi) {
-   
     const details = err.details.map((detail) => ({
       message: detail.message,
       path: detail.path,
@@ -63,4 +62,5 @@ export const errorHandler = (err, req, res, next) => {
     message: 'Internal Server Error',
     data: err.message || 'An unexpected error occurred',
   });
+  next();
 };
