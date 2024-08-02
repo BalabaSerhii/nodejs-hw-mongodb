@@ -5,6 +5,7 @@ import contactsRouter from './routers/contacts.js';
 
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+
 import { env } from './utils/env.js';
 
 const PORT = Number(env('PORT', '3000'));
@@ -31,8 +32,10 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
+
       message: 'Contact not found!',
       
+
     });
   });
   
