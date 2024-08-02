@@ -1,4 +1,4 @@
-// import { HttpError } from 'http-errors';
+import { HttpError } from 'http-errors';
 
 // export const errorHandler = (err, req, res, next) => {
 //   if (err instanceof HttpError) {
@@ -24,7 +24,7 @@
 
 export const errorHandler = (err, req, res, next) => {
   if (err.isJoi) {
-    // Ошибки Joi имеют флаг isJoi
+    
     const details = err.details.map((detail) => ({
       message: detail.message,
       path: detail.path,
