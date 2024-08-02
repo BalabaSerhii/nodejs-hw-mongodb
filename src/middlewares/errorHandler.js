@@ -21,10 +21,8 @@ import { HttpError } from 'http-errors';
 //   next();
 // };
 
-
 export const errorHandler = (err, req, res, next) => {
   if (err.isJoi) {
-    
     const details = err.details.map((detail) => ({
       message: detail.message,
       path: detail.path,
