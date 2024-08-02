@@ -31,8 +31,8 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Contact not found!',
-      
+      message: 'Contact not found!!',
+
     });
   });
   
