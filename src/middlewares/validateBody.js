@@ -24,7 +24,11 @@ export const validateBody = (schema) => async (req, res, next) => {
     });
     next();
   } catch (err) {
+
     err.isJoi = true;
     next(err);
+
   }
+  
 };
+
