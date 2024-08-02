@@ -32,7 +32,7 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Welcome!',
+      message: 'Hello world!',
     });
   });
 
