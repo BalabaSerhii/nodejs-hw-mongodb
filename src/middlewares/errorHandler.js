@@ -1,4 +1,4 @@
-import { HttpError } from 'http-errors';
+// import { HttpError } from 'http-errors';
 
 // export const errorHandler = (err, req, res, next) => {
 //   if (err.isJoi) {
@@ -30,7 +30,10 @@ import { HttpError } from 'http-errors';
 //     message: 'Internal Server Error',
 //     data: err.message || 'An unexpected error occurred',
 //   });
+//   next();
 // };
+
+import { HttpError } from 'http-errors';
 
 export const errorHandler = (err, req, res, next) => {
   if (err.isJoi) {
@@ -62,5 +65,4 @@ export const errorHandler = (err, req, res, next) => {
     message: 'Internal Server Error',
     data: err.message || 'An unexpected error occurred',
   });
-  next();
 };
