@@ -51,25 +51,49 @@ export const createContact = async (payload) => {
 };
 
 export const patchContact = async (contactId, payload, options = {}) => {
-  const rawResult = await ContactsCollection.findOneAndUpdate(
-    { _id: contactId },
+  const updatedContact = await ContactsCollection.findByIdAndUpdate(
+    contactId,
     payload,
-    {
-      new: true,
-      includeResultMetadata: true,
-      ...options,
-    },
+    { new: true, ...options },
   );
 
-  if (!rawResult || !rawResult.value) return null;
+  if (!updatedContact) return null;
 
   return {
-    contact: rawResult.value,
-    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+    contact: updatedContact,
+    isNew: false,
   };
 };
 
 export const deleteContact = async (contactId) => {
-  const contact = await ContactsCollection.findOneAndDelete({ _id: contactId });
-  return contact;
+  const deletedContact = await ContactsCollection.findByIdAndDelete(contactId);
+
+  // Возвращаем null, если контакт не был найден
+  if (!deletedContact) return null;
+
+  return deletedContact;
 };
+
+// export const patchContact = async (contactId, payload, options = {}) => {
+//   const rawResult = await ContactsCollection.findOneAndUpdate(
+//     { _id: contactId },
+//     payload,
+//     {
+//       new: true,
+//       includeResultMetadata: true,
+//       ...options,
+//     },
+//   );
+
+//   if (!rawResult || !rawResult.value) return null;
+
+//   return {
+//     contact: rawResult.value,
+//     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+//   };
+// };
+
+// export const deleteContact = async (contactId) => {
+//   const contact = await ContactsCollection.findOneAndDelete({ _id: contactId });
+//   return contact;
+// };
