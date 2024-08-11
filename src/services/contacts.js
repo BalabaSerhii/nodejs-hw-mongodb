@@ -66,12 +66,8 @@ export const patchContact = async (contactId, payload, options = {}) => {
 };
 
 export const deleteContact = async (contactId) => {
-  const deletedContact = await ContactsCollection.findByIdAndDelete(contactId);
-
-  // Возвращаем null, если контакт не был найден
-  if (!deletedContact) return null;
-
-  return deletedContact;
+  const contact = await ContactsCollection.findOneAndDelete({ _id: contactId });
+  return contact;
 };
 
 // export const patchContact = async (contactId, payload, options = {}) => {
