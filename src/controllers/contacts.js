@@ -31,10 +31,14 @@ export const getContactsController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
+  if (!req.user || !req.user._id) {
+    return next(createHttpError(401, 'Unauthorized'));
+  }
+
   const { contactId } = req.params;
 
   try {
-    const contact = await getContactById(contactId);
+    const contact = await getContactById(contactId, req.user._id);
 
     if (!contact) {
       return next(createHttpError(404, 'Contact not found'));
