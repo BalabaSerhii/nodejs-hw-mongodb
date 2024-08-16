@@ -31,26 +31,26 @@ export const getContactsController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
-  if (!req.user || !req.user._id) {
-    return next(createHttpError(401, 'Unauthorized'));
-  }
-
-  const { contactId } = req.params;
-
   try {
-    const contact = await getContactById(contactId, req.user._id);
+    const userId = req.user?._id;
+    if (!userId) {
+      return next(createHttpError(401, 'Unauthorized: User not authenticated'));
+    }
+
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId, userId);
 
     if (!contact) {
       return next(createHttpError(404, 'Contact not found'));
     }
 
-    res.json({
+    res.status(200).json({
       status: 200,
-      message: `Successfully found contact with id ${contactId}!`,
+      message: 'Contact retrieved successfully',
       data: contact,
     });
-  } catch (err) {
-    next(createHttpError(500, 'Server error'));
+  } catch (error) {
+    next(error);
   }
 };
 
