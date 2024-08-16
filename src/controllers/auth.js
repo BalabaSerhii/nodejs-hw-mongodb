@@ -6,14 +6,18 @@ import {
   logoutUser,
 } from '../services/auth.js';
 
-export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+export const registerUserController = async (req, res, next) => {
+  try {
+    const user = await registerUser(req.body);
 
-  res.json({
-    status: 201,
-    message: 'Successfully registered a user!',
-    data: user,
-  });
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully registered a user!',
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const loginUserController = async (req, res) => {
