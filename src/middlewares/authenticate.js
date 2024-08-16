@@ -34,7 +34,8 @@ export const authenticate = async (req, res, next) => {
     return next(createHttpError(401, 'User not found'));
   }
 
-  req.user = user; // Устанавливаем пользователя в req
+  req.user = user;
+  console.log('Authenticated User:', req.user); // Логирование
 
   next();
 };
