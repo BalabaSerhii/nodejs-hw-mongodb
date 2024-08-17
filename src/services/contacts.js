@@ -39,7 +39,6 @@ export const getAllContacts = async ({
     ...paginationData,
   };
 };
-
 export const getContactById = async (contactId, userId) => {
   const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   return contact;
@@ -50,7 +49,12 @@ export const createContact = async (payload) => {
   return contact;
 };
 
-export const patchContact = async (contactId, userId, payload, options = {}) => {
+export const patchContact = async (
+  contactId,
+  userId,
+  payload,
+  options = {},
+) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: contactId, userId },
     payload,
@@ -58,7 +62,7 @@ export const patchContact = async (contactId, userId, payload, options = {}) => 
       new: true,
       includeResultMetadata: true,
       ...options,
-    }
+    },
   );
 
   if (!rawResult || !rawResult.value) return null;
@@ -70,7 +74,10 @@ export const patchContact = async (contactId, userId, payload, options = {}) => 
 };
 
 export const deleteContact = async (contactId, userId) => {
-  const contact = await ContactsCollection.findOneAndDelete({ _id: contactId, userId });
+  const contact = await ContactsCollection.findOneAndDelete({
+    _id: contactId,
+    userId,
+  });
   return contact;
 };
 
