@@ -37,7 +37,7 @@ export const setupServer = () => {
 
     app.get('/', (req, res) => {
         res.json({
-            message: 'hi!',
+            message: 'Hi!',
         });
     });
 
