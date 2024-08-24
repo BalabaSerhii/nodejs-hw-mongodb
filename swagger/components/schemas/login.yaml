@@ -1,0 +1,9 @@
+type: object
+required:
+  - email
+  - password
+properties:
+  accessToken:
+    description: 'Access token'
+    type: string
+    example: FoiNxa5knPpk5Ty3ngt6h46F6M146P3EiS0eszFt

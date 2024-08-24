@@ -1,0 +1,57 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: 'Login user'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User email'
+            type: string
+            example: 'example@gmail.com'
+          password:
+            description: 'User password'
+            type: string
+            example: 'Serg'
+responses:
+  '200':
+    description: Login a user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  example: 'FoiNxa5knPpk5Ty3ngt6h46F6M146P3EiS0eszFt'
+              $ref: '../../../components/schemas/login.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
